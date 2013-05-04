@@ -1,0 +1,6 @@
+{
+    "dataDomain": "http://localhost/projects/MTASplit/",
+    "stationsFile": "stop-data.json",
+    "stopsDirectory": "stops",
+    "mapquestKey":"Fmjtd%7Cluub2d6rnq%2Cbg%3Do5-9u7g5u"
+}
