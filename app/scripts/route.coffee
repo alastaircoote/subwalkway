@@ -1,6 +1,25 @@
-define ["config","async","as!https://maps.googleapis.com/maps/api/js?key=AIzaSyCmJN58nGwCZcXNxFkpFPsE1PWUPf2V1u8&sensor=true"], (Config, async,g) ->
+define ["config","async"], (Config, async) ->
+
+    gmapsLoaded = false
+
     class Router
+        
+        @loadGmaps: (cb) ->
+            console.log "loading"
+            window.gMapsComplete = () ->
+                window.gMapsComplete = null
+                console.log "LOADED"
+                gmapsLoaded = true
+                cb()
+            $.ajax
+                url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyCmJN58nGwCZcXNxFkpFPsE1PWUPf2V1u8&sensor=true&callback=gMapsComplete"
+                dataType:"script"
+                cache:true
+
+
         @getRoute: (from, to,cb) ->
+           
+            console.log "direction"
             directionsService = new google.maps.DirectionsService();
             opts = 
                 origin: "#{from[0]},#{from[1]}"
@@ -32,6 +51,11 @@ define ["config","async","as!https://maps.googleapis.com/maps/api/js?key=AIzaSyC
                     cb json
             ###
         @getMultipleRoutes: (from, toArray, cb) ->
+
+            if !gmapsLoaded
+                return @loadGmaps () =>
+                    @getMultipleRoutes from, toArray, cb
+
             async.map toArray, (to, cbb) =>
                 @getRoute from, [to.lat,to.lng], (json) ->
                     console.log "id", to.id

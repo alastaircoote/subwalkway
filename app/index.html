@@ -8,7 +8,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>Subwalkway</title>
         <meta name="description" content="">
-        <meta name="viewport" content="width=device-width">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
         <link rel="stylesheet" href="styles/main.css" type="text/css">
         <!-- build:js scripts/vendor/modernizr.js -->
@@ -16,7 +18,29 @@
         <!-- endbuild -->
     </head>
     <body>
-        <div id="mapDiv"></div>
+        <!--<div id="mapDiv"></div>-->
+
+        <div id="cardholder">
+            <div class="glasspane">
+                <div class="side front">
+                    <div class="pane">
+                        <div class="content" id="stationList">
+                            <h1>Sub<span>walk</span>way</h1>
+
+                        </div>
+                        <div id='spinner'>
+                              <div id="spin"></div>
+                            </div>
+                    </div>
+                </div>
+                <div class="side back">
+                    <div class="pane"><div class="content">
+                        <div id="mapDiv"></div>
+                        <ol id="directions"></ol>
+                    </div></div>
+                </div>
+            </div>
+        </div>
         
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->

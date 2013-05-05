@@ -1,0 +1,104 @@
+
+body {
+  background:#000;
+  margin:0;
+  padding:0;
+  overflow: hidden;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+}
+
+
+#cardholder {
+  -webkit-perspective: 1600px;
+  width:100%;
+  height:100%;
+  position: absolute;
+}
+
+
+
+.glasspane {
+  @radius: 3em;
+
+  //-webkit-transform:translate3d(0,0,0);
+  position:absolute;
+  width:100%;
+  height:100%;
+  
+  top:-7px;
+  left:-7px;
+
+  &.animated, div.animated {
+      -webkit-transition: -webkit-transform 0.5s;
+    }
+  
+
+  div.side {
+    -webkit-transform-style: preserve-3d;
+    width: 100%;
+    height: 100%;
+    border: solid 7px rgba(255,255,255,0.2);
+    overflow: hidden;
+    border-radius: 2em;
+    /*background: rgba(255,255,255,0.12);
+    border-radius: 3em;
+    padding:3px;
+    box-sizing:border-box;
+    border: solid 1px rgba(255,255,255,0.121);
+    position:absolute;*/
+    position: absolute;
+    -webkit-backface-visibility: hidden; 
+    /*.glass-style();
+    
+    box-shadow: inset 1px 1px 1px 0.5px rgba(255,255,255,0.05),
+                inset -1px -1px 1px 0.5px rgba(0,0,0,0.6);*/
+    
+    
+
+    
+
+    &.back {
+      //display:none;
+      -webkit-transform:rotate3d(0,1,0,90deg);   
+      //display:none;
+    }
+
+    div.pane {
+      //width:100%;
+      height:100%;
+      
+      //border-radius: 3em;
+      //border: solid 1px rgba(255,255,255,0.1);
+      background-clip:content-box;
+      //box-sizing:border-box;
+      //padding: 10px;
+      color:#ffffff;
+      position: relative;
+      box-sizing:border-box;
+      /*box-shadow: inset 5px 5px 10px 1px rgba(255,255,255,0.03),
+                  inset -5px -5px 10px 1px rgba(0,0,0,0.2);*/
+
+      .content {
+        
+        position: relative;
+      }
+    }
+
+  }
+
+  p {
+    margin:0;
+    text-transform: uppercase;
+    font-size: 5em;
+    line-height: 1em;
+    display: block;
+    text-align: center;
+    margin: 0.5em 0 1em 0;
+  }
+
+
+ 
+
+
+}

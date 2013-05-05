@@ -1,0 +1,27 @@
+<li class="routerow r<%- route %>" >
+
+    <div class="route r<%- route %>">
+        <% if (direction == 0) { %>
+            <i class="icon icon-circle-arrow-up"></i>
+        <% } else { %>
+             <i class="icon icon-circle-arrow-down"></i>
+        <% } %>
+        <span><%- route %></span>
+    </div>
+    <div class="timetill">
+        <%- timeTillArrive %><span> min</span>
+    </div>
+
+    <div class="goingto">
+        <% if (direction == 0) { %>
+            <i class="icon icon-circle-arrow-up"></i>
+        <% } else { %>
+             <i class="icon icon-circle-arrow-down"></i>
+        <% } %>
+        <%- to %>
+    </div>
+    <div class="station-name">
+        <%- station.name %> <span>(<%= Math.ceil(station.route.legs[0].duration.value / 60) %> min walk)</span>
+    </div>
+    <div style="clear:both"></div>
+</li>

@@ -1,17 +1,239 @@
 @import "vendor/leaflet.less";
 @import "normalize.less";
 @import "preboot.less";
-
-
+@import "cards.less";
+@import "font-awesome.less";
 
 body {
     overflow: hidden;
+    font-family: "Helvetica";
+    height:100%;
 }
 
-#mapDiv {
+#cardholder {
+    display:none;
+}
+
+div.pane {
+    background: url("../images/asfalt_@2X.jpg");
+    background-size: 465px 349px;
+}
+
+h1 {
+    margin:0;
+    font-weight: normal;
+    span {
+        font-weight: bold;
+    }
+    font-size: 300%;
+    color: #999;
+    background: rgba(0,0,0,0.6);
+    padding:3%;
+    border-bottom: solid 1px #333;
+}
+
+#spinner {
     position: absolute;
-    top:0;
-    left:0;
+    left:50%;
+    top:50%;
+}
+
+
+div.pane {
+    
     width:100%;
-    height:100%;
+
+
+    .content {
+        width:100%;
+        height:100%;
+        position: relative;
+    }
+}
+
+#stationList {
+    ul {
+        list-style: none;
+        padding:0;
+        margin:0;
+        overflow-y: auto;
+        -webkit-overflow-scrolling:touch;
+        
+    }
+
+    li {
+        clear:both;
+        padding: 2%;
+        border-bottom: solid 1px #333;
+        text-shadow: 1px 1px #000;
+    }
+
+    div.route {
+        width: 1.6em;
+        height: 1.6em;
+        float:left;
+        border-radius: 1.75em;
+        font-size: 2.75em;
+        text-align: center;
+        line-height: 1.7em;
+        font-weight: bold;
+        margin-right: 0.5em;
+        position: relative;
+        text-shadow:none;
+
+
+        span {
+            display:block;
+            position: absolute;
+            top:0;
+            left:0;
+            width:100%;
+            color:#fff;
+        }
+
+        i {
+            display: none;
+            font-size: 1.95em;
+            padding:0;
+            margin-left:-0.2em;
+            margin-top: -0.09em;
+        }
+
+        
+    }
+
+    li.routerow.active {
+        color:#000;
+        text-shadow: none;
+
+
+        .station-name, .station-name span {
+            color:#000;
+        }
+
+        div.route {
+            background: #000;
+        }
+    }
+    div.route, li.routerow.active {
+
+        .badgeColor(@c) {
+
+            background: @c;//lighten(@c,10);
+
+          
+        }
+
+        &.rF, &.rM, &.rB, &.rD {
+            .badgeColor(#FF6319);
+
+            div.route span {
+                color:#FF6319;
+            }
+        }
+
+        &.r2, &.r3, &.r1 {
+            .badgeColor(#EE352E);
+
+            div.route span {
+                color:#EE352E;
+            }
+        }
+
+        &.r4, &.r5, &.r6, &.r6X {
+            .badgeColor(#00933C);
+            div.route span {
+                color:#00933C;
+            }
+        }
+
+        &.rC, &.rA, &.rE {
+            .badgeColor(#2850AD);
+            div.route span {
+                color:#2850AD;
+            }
+        }
+
+        &.rQ, &.rR, &.rN {
+            .badgeColor(#FCCC0A);
+            background: #FCCC0A;
+
+            span {
+                color:#000;
+            }
+
+            div.route span {
+                color:#FCCC0A;
+            }
+        }
+
+        &.r7, &.r7X {
+            .badgeColor(#B933AD);
+            div.route span {
+                color:#B933AD;
+            }
+        }
+
+        &.rG {
+            .badgeColor(#6CBE45);
+            div.route span {
+                color:#6CBE45;
+            }
+        }
+
+        &.rGS, &.rH, &.S, &.SI {
+            color: #808183;
+            div.route span {
+                color:#808183;
+            }
+        }
+    }
+
+    .goingto {
+       
+        font-size: 1.7em;
+        font-weight: bold;
+    }
+
+    .station-name {
+        margin-top: 0.4em;
+        text-transform: uppercase;
+        font-size: 1.5em;
+        color:#aaa;
+
+        span {
+            color:darken(#999,30);
+        }
+    }
+
+    .timetill {
+        float:right;
+        font-size: 3em;
+        margin-left: 0.4em;
+        margin-top: 0.1em;
+
+        span {
+            font-size: 0.7em;
+        }
+    }
+}
+
+
+#mapDiv {
+    border-bottom: solid 1px #999;
+    width:100%;
+    height:30%;
+}
+
+#directions {
+    font-size: 2em;
+    color:#999;
+    list-style: none;
+    padding:0;
+    margin-top:0;
+
+    li {
+        padding: 1em 1em;
+        border-bottom: solid 1px darken(#999,40);
+    }
 }

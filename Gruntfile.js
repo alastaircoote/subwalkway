@@ -15,6 +15,8 @@ module.exports = function (grunt) {
     // load all grunt tasks
     require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
+    grunt.loadNpmTasks('grunt-symbolic-link');
+
     // configurable paths
     var yeomanConfig = {
         app: 'app',
@@ -150,7 +152,7 @@ module.exports = function (grunt) {
                 // Options: https://github.com/jrburke/r.js/blob/master/build/example.build.js
                 options: {
                     // `name` and `out` is set by grunt-usemin
-                    baseUrl: 'app/scripts',
+                    baseUrl: '.tmp/scripts',
                     optimize: 'none',
                     // TODO: Figure out how to make sourcemaps work with grunt-usemin
                     // https://github.com/yeoman/grunt-usemin/issues/30
@@ -255,6 +257,16 @@ module.exports = function (grunt) {
                         'styles/fonts/*'
                     ]
                 }]
+            },
+            js: {
+                files: [{
+                    //expand: true,
+                    dot: true,
+                    //cwd: '<%= yeoman.app %>',
+                    dest: '.tmp/components/',
+                    src: ['../app/components/**']
+                }]
+                
             }
         },
         concurrent: {
@@ -276,7 +288,7 @@ module.exports = function (grunt) {
                 exclude: ['modernizr']
             },
             all: {
-                rjsConfig: '<%= yeoman.app %>/scripts/main.js'
+                rjsConfig: '<%= yeoman.app %>/scripts/main.coffee'
             }
         },
         less: {
@@ -315,6 +327,8 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build', [
         'clean:dist',
+        'copy:js',
+        'coffee:dist',
         'useminPrepare',
         'concurrent:dist',
         'requirejs',

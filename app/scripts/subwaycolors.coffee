@@ -16,5 +16,5 @@ define [], () ->
     for key,value of colors
         for subkey in key.split(",")
             mapped[subkey] = value
-
+    console.log mapped
     return mapped

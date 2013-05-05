@@ -5,8 +5,8 @@ require.config
         leaflet: "../components/leaflet/dist/leaflet"
         text: "../components/requirejs-text/text"
         async: "../components/async/lib/async"
-        gmaps: "https://maps.googleapis.com/maps/api/js?key=AIzaSyCmJN58nGwCZcXNxFkpFPsE1PWUPf2V1u8&sensor=true"
         as : 'vendor/requirejs-async'
+        underscore: "../components/underscore/underscore"
     shim:
         bootstrap:
             deps: ['jquery'],
@@ -22,10 +22,19 @@ require.config
             deps: ["vendor/geo"]
         "gmaps":
             exports: "google"
+        "underscore":
+            exports: "_"
+        "vendor/spin":
+            exports: "Spinner"
 
 
 require ['app', 'jquery', 'bootstrap'], (app, $) ->
     'use strict'
 
-    console.log(app);
-    console.log('Running jQuery %s', $().jquery);
+    $("h1").on "touchstart", (e) -> 
+        e.stopPropagation()
+        window.location.reload()
+
+    $("body").css "font-size", $(window).width() / 50
+
+    $("#cardholder").css "display", "block"

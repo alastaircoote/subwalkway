@@ -1,12 +1,21 @@
 define ["jquery", "leaflet","routelayer", "buttonlayer","subwaycolors"], ($, L, RouteLayer, ButtonLayer, SubwayColors) ->
     class MapView
         constructor: (@el) ->
+            @el.parents(".side").first().css
+                "display":"block"
+                "visibility": "hidden"
+
             @map = L.map(@el[0],
                 zoomControl: false
                 attributionControl:false
                 dragging:false
                 touchZoom:false
             ).setView([40.7570, -73.9819], 11);
+
+            @map.on "load", () ->
+                @el.parents(".side").first().css
+                    #"display":"none"
+                    #"visibility": "visible"
 
             opts = {}
             if L.Browser.retina
@@ -38,6 +47,7 @@ define ["jquery", "leaflet","routelayer", "buttonlayer","subwaycolors"], ($, L, 
         drawRoutes: (routes) =>
 
             if @routeLayer then @map.removeLayer(@routeLayer)
+            @routeLayer.destroy()
 
             #withLines = routes.filter((r) -> console.log r; r.route.legs.length > 0)
 
