@@ -5,6 +5,8 @@ require.config
         leaflet: "../components/leaflet/dist/leaflet"
         text: "../components/requirejs-text/text"
         async: "../components/async/lib/async"
+        gmaps: "https://maps.googleapis.com/maps/api/js?key=AIzaSyCmJN58nGwCZcXNxFkpFPsE1PWUPf2V1u8&sensor=true"
+        as : 'vendor/requirejs-async'
     shim:
         bootstrap:
             deps: ['jquery'],
@@ -18,6 +20,9 @@ require.config
         "vendor/latlon":
             exports: "LatLon"
             deps: ["vendor/geo"]
+        "gmaps":
+            exports: "google"
+
 
 require ['app', 'jquery', 'bootstrap'], (app, $) ->
     'use strict'

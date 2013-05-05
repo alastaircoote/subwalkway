@@ -1,6 +1,16 @@
-define ["config","async"], (Config, async) ->
+define ["config","async","as!https://maps.googleapis.com/maps/api/js?key=AIzaSyCmJN58nGwCZcXNxFkpFPsE1PWUPf2V1u8&sensor=true"], (Config, async,g) ->
     class Router
         @getRoute: (from, to,cb) ->
+            directionsService = new google.maps.DirectionsService();
+            opts = 
+                origin: "#{from[0]},#{from[1]}"
+                destination: "#{to[0]}, #{to[1]}"
+                travelMode: google.maps.TravelMode.WALKING
+
+            directionsService.route opts, (result,status) ->
+                cb result
+
+            ###
             opts =
                 key: Config.mapquestKey
                 from: "#{from[0]},#{from[1]}"
@@ -20,13 +30,14 @@ define ["config","async"], (Config, async) ->
                 success: (json) ->
                     console.log json
                     cb json
-
+            ###
         @getMultipleRoutes: (from, toArray, cb) ->
             async.map toArray, (to, cbb) =>
                 @getRoute from, [to.lat,to.lng], (json) ->
+                    console.log "id", to.id
                     cbb null,
                         id: to.id
-                        route: json.route
+                        route: json.routes[0]
 
             , (err,results) =>
                 cb(results)

@@ -6,10 +6,12 @@ define ["jquery", "leaflet","routelayer", "buttonlayer","subwaycolors"], ($, L, 
                 attributionControl:false
                 dragging:false
                 touchZoom:false
-                detectRetina: false
             ).setView([40.7570, -73.9819], 11);
 
-            L.tileLayer('http://a.tiles.mapbox.com/v3/alastaircoote.map-xgyabfvz/{z}/{x}/{y}.png',{detectRetina:true}).addTo(@map);
+            opts = {}
+            if L.Browser.retina
+                opts = {detectRetina:true,tileSize:128,zoomOffset:1}
+            L.tileLayer('http://a.tiles.mapbox.com/v3/alastaircoote.map-xgyabfvz/{z}/{x}/{y}.png',opts).addTo(@map);
 
             ###
             layer = new MM.TemplatedLayer('http://a.tiles.mapbox.com/v3/alastaircoote.map-xgyabfvz/{Z}/{X}/{Y}.png')
@@ -28,28 +30,28 @@ define ["jquery", "leaflet","routelayer", "buttonlayer","subwaycolors"], ($, L, 
 
         fitPoints: (points) =>
             bounds = new L.LatLngBounds points
-            bounds.pad(10)
-            console.log points,bounds
+            zoom = @map.getBoundsZoom bounds
 
-            @map.fitBounds bounds
+            @map.setView bounds.getCenter(), zoom
+            #@map.fitBounds bounds
 
         drawRoutes: (routes) =>
 
             if @routeLayer then @map.removeLayer(@routeLayer)
 
-            withLines = routes.filter((r) -> console.log r; r.route.legs.length > 0)
+            #withLines = routes.filter((r) -> console.log r; r.route.legs.length > 0)
 
-            withLines.forEach (routeObj) ->
+            routes.forEach (routeObj) ->
+                console.log routeObj
+                points = routeObj.route.overview_path.map (p) -> [p.lat(), p.lng()]
+    
+                points.push routeObj.nearestEntrance
 
-                points = routeObj.route.shape.shapePoints
-                translated = []
-                x = 0
-                while x < points.length
-                    translated.push [points[x], points[x+1]]
-                    x = x+2
-                return routeObj.route.mappedShape = translated
+                return routeObj.route.mappedShape = points
 
-            @routeLayer = new RouteLayer(withLines)
+
+
+            @routeLayer = new RouteLayer(routes)
             @map.addLayer(@routeLayer)
             @routeLayer.drawRoutes()
 
@@ -60,7 +62,7 @@ define ["jquery", "leaflet","routelayer", "buttonlayer","subwaycolors"], ($, L, 
                     c = SubwayColors[r]
                     if distinctColors.indexOf(c) == -1 then distinctColors.push(c)
 
-                buttonLayer = new ButtonLayer [station.lat, station.lng], distinctColors
+                buttonLayer = new ButtonLayer station.nearestEntrance, distinctColors
                 @map.addLayer(buttonLayer)
 
 

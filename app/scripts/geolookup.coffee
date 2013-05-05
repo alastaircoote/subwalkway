@@ -8,7 +8,6 @@ define ["config","vendor/latlon","leaflet","async"], (Config,LatLon,L, async) ->
 
             success = (loc) =>
                 if loc.coords.accuracy <= metres
-                    console.log "acc"
                     cb(loc)
                     navigator.geolocation.clearWatch @watch
 
@@ -28,7 +27,7 @@ define ["config","vendor/latlon","leaflet","async"], (Config,LatLon,L, async) ->
                 @lookupStations(loc,cb)
 
             radius = 0.7 # search 0.7km from source
-
+            console.log "userLocation", loc.coords.latitude, loc.coords.longitude
             initialPoint = new LatLon(loc.coords.latitude, loc.coords.longitude)
             sw = initialPoint.destinationPoint(225, radius)
             ne = initialPoint.destinationPoint(45, radius)
@@ -40,7 +39,7 @@ define ["config","vendor/latlon","leaflet","async"], (Config,LatLon,L, async) ->
 
             nearbyStations.forEach (s) ->
                 if !s.entrances || s.entrances.length ==0
-                    return s.nearestEntrance = [parseFloat(s.latitude), parseFloat(s.longitude)]
+                    return s.nearestEntrance = [parseFloat(s.lat), parseFloat(s.lng)]
                 s.entrances.sort (a,b) ->
                     return new LatLon(a[0],a[1]).distanceTo(initialPoint) - new LatLon(b[0], b[1]).distanceTo(initialPoint)
                 s.nearestEntrance = [parseFloat(s.entrances[0][0]), parseFloat(s.entrances[0][1])]
@@ -100,6 +99,9 @@ define ["config","vendor/latlon","leaflet","async"], (Config,LatLon,L, async) ->
             for station in stations
                 for route in station.routes
                     if routesAlreadyCounted.indexOf(route) == -1
+                        station.routes = station.routes.filter (r) ->
+                            routesAlreadyCounted.indexOf(r) == -1
+                            
                         finalStationList.push(station)
                         routesAlreadyCounted = routesAlreadyCounted.concat(station.routes)
                         break;
