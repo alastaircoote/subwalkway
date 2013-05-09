@@ -52,7 +52,6 @@ define ["jquery", "leaflet","routelayer", "buttonlayer","subwaycolors"], ($, L, 
             #withLines = routes.filter((r) -> console.log r; r.route.legs.length > 0)
 
             routes.forEach (routeObj) ->
-                console.log routeObj
                 points = routeObj.route.overview_path.map (p) -> [p.lat(), p.lng()]
     
                 points.push routeObj.nearestEntrance

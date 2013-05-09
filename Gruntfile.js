@@ -161,7 +161,7 @@ module.exports = function (grunt) {
                     // http://requirejs.org/docs/errors.html#sourcemapcomments
                     preserveLicenseComments: false,
                     useStrict: true,
-                    wrap: true,
+                    wrap: false,
                     //uglify2: {} // https://github.com/mishoo/UglifyJS2
                 }
             }
@@ -170,10 +170,10 @@ module.exports = function (grunt) {
             dist: {
                 files: {
                     src: [
-                        '<%= yeoman.dist %>/scripts/{,*/}*.js',
+                        '<%= yeoman.dist %>/scripts/{,*/}*.{js,html}',
                         '<%= yeoman.dist %>/styles/{,*/}*.css',
                         '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}',
-                        '<%= yeoman.dist %>/styles/fonts/*'
+                        '<%= yeoman.dist %>/styles/font/*'
                     ]
                 }
             }
@@ -254,19 +254,31 @@ module.exports = function (grunt) {
                         '*.{ico,txt}',
                         '.htaccess',
                         'images/{,*/}*.{webp,gif}',
-                        'styles/fonts/*'
+                        'styles/font/*'
                     ]
                 }]
             },
             js: {
                 files: [{
-                    //expand: true,
+                    expand: true,
                     dot: true,
-                    //cwd: '<%= yeoman.app %>',
-                    dest: '.tmp/components/',
-                    src: ['../app/components/**']
+                    cwd: '<%= yeoman.app %>',
+                    dest: '.tmp/',
+                    src: [
+                        './components/**',
+                        './scripts/{,*/}*.{js,json}'
+                    ]
                 }]
                 
+            },
+            htmlTemplates: {
+                files: [{
+                    expand: true,
+                    dot: true,
+                    cwd: '<%= yeoman.app %>',
+                    dest: '.tmp/',
+                    src: ['./scripts/new/*.uhtml']
+                }]
             }
         },
         concurrent: {
@@ -329,15 +341,16 @@ module.exports = function (grunt) {
         'clean:dist',
         'copy:js',
         'coffee:dist',
+        'copy:htmlTemplates',
         'useminPrepare',
         'concurrent:dist',
         'requirejs',
+        'less:dev',
         'cssmin',
         'concat',
         'uglify',
         'copy',
         'rev',
-        'less:dev',
         'usemin'
     ]);
 

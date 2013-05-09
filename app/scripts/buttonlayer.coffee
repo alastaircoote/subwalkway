@@ -2,8 +2,7 @@ define ["leaflet", "subwaycolors"], (L, SubwayColors) ->
 
     class ButtonLayer extends L.Class
         constructor: (@latlng, @colors) ->
-            console.log @latlng
-
+       
         onAdd: (@map) =>
             @map.on "viewreset", @_reset
             @_reset()
@@ -12,8 +11,7 @@ define ["leaflet", "subwaycolors"], (L, SubwayColors) ->
             if @drawCanvas then @drawCanvas.remove()
             @point = @map.latLngToLayerPoint @latlng
 
-            console.log @point
-
+           
             diameter = @map.getZoom() * 2.5
 
             @point.x -= diameter/2

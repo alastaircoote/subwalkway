@@ -14,7 +14,6 @@ define ["leaflet", "subwaycolors","lineintersect"], (L, SubwayColors, lineInters
             @_reset()
 
         onRemove: (@map) =>
-            console.log "removing"
             @container.remove()
 
         _reset: () =>
@@ -54,8 +53,6 @@ define ["leaflet", "subwaycolors","lineintersect"], (L, SubwayColors, lineInters
         drawRoutes: (@routes) =>
 
             toDraw = []
-
-            console.log "routes", @routes
 
             for route in @routes
                route.mappedShape = route.shape.map (s, i) =>
@@ -101,8 +98,7 @@ define ["leaflet", "subwaycolors","lineintersect"], (L, SubwayColors, lineInters
             @ctx.lineWidth = @lineWidth * 4
 
             offset = if route.color == "#2850AD" then 3 else 0
-            console.log offset
-
+            
             mappedPoints = route.shape.map (s) =>
 
                 p = @map.latLngToLayerPoint(s)

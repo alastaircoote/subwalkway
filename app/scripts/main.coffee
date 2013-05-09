@@ -7,6 +7,7 @@ require.config
         async: "../components/async/lib/async"
         as : 'vendor/requirejs-async'
         underscore: "../components/underscore/underscore"
+        timetemplate : "new/time-template.uhtml"
     shim:
         bootstrap:
             deps: ['jquery'],
@@ -35,6 +36,24 @@ require ['app', 'jquery', 'bootstrap'], (app, $) ->
         e.stopPropagation()
         window.location.reload()
 
-    $("body").css "font-size", $(window).width() / 50
+    setTimeout () ->
+        window.scrollTo(0, 1)
+    , 1000
+
+    if $(window).height() == 356
+        $("#cardholder").css "height", $(window).height() + 60
+
+    baseSize = $(window).width()
+    if baseSize > 600 
+        baseSize = 600
+        $("#cardholder").css
+            "width": "600px"
+            "left": "50%"
+            "height": $(window).height() * 0.9
+            "margin-top": -(($(window).height() * 0.9) / 2)
+            "margin-left": "-300px"
+            "top": "50%"
+
+    $("body").css "font-size", baseSize / 50
 
     $("#cardholder").css "display", "block"

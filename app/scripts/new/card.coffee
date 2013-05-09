@@ -19,6 +19,8 @@ define [], () ->
             @el.on "touchstart mousedown", @touchstart
             @el.on "touchmove mousemove", @touchmove
             @el.on "touchend mouseup", @touchend
+            @el.on "isscrolling", () =>
+                @isActive = false
 
             @frontEl = $("div.front",@el)
             @backEl = $("div.back",@el)
@@ -45,6 +47,7 @@ define [], () ->
         touchstart: (e) =>
             #e.preventDefault();
             e.stopPropagation();
+            @isActive = true
             if @touchId
                 return false
             # Reset attributes
@@ -64,6 +67,7 @@ define [], () ->
             return true
 
         touchmove: (e) =>
+            if !@isActive then return
             #e.preventDefault();
             e.stopPropagation();
             #@el.html("touchmove")
@@ -160,9 +164,7 @@ define [], () ->
 
         touchend: (e) =>
             if !super(e) then return false
-            console.log @moveMode
             if @moveMode != direction.HORIZONTAL then return
-            console.log "processing", @moveMode, direction.HORIZONTAL 
             stats = super(e)
 
             cardWidth = @el.width()
@@ -211,7 +213,6 @@ define [], () ->
             @postAnimate()
 
         postAnimate: () =>
-            console.log "switching"
             newBack = @frontEl
             @frontEl = @backEl
             @backEl = newBack

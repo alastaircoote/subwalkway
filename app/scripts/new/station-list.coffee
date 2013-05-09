@@ -1,4 +1,4 @@
-define ["underscore","text!./time-template.html","vendor/spin"], (_,timeTemplate,Spinner) ->
+define ["underscore","text!timetemplate","vendor/spin"], (_,timeTemplate,Spinner) ->
     class StationList
         constructor: () ->
 
@@ -6,6 +6,8 @@ define ["underscore","text!./time-template.html","vendor/spin"], (_,timeTemplate
 
             $("body").on "touchend", () ->
                 $("li.active").removeClass("active")
+
+
 
             new Spinner({
                   lines: 13, # The number of lines to draw
@@ -55,7 +57,7 @@ define ["underscore","text!./time-template.html","vendor/spin"], (_,timeTemplate
 
         processEntries: (times) ->
             root = $("<ul/>")
-            root.css "height", $(window).height() - $("h1").outerHeight()
+            root.css "height", $("#cardholder").height() - $("h1").outerHeight()
             for time in times
                 root.append(@template(time))
 
@@ -63,12 +65,16 @@ define ["underscore","text!./time-template.html","vendor/spin"], (_,timeTemplate
 
             self = @
             root.on "touchstart", "li", () ->
+                $("li.active").removeClass("active")
                 self.highlightRow($(this))
+
+            root.on "scroll", () ->
+                $(".glasspane").trigger "isScrolling"
+                $("li.active").removeClass("active")
 
 
         highlightRow: (el,row) =>
             $(el).addClass "active"
-            console.log $(el).parent()
             index = $(el).parent().children().index($(el))
             @mapInstance.mapRoute(@times[index])
 

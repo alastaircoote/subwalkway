@@ -5,10 +5,8 @@ define ["config","async"], (Config, async) ->
     class Router
         
         @loadGmaps: (cb) ->
-            console.log "loading"
             window.gMapsComplete = () ->
                 window.gMapsComplete = null
-                console.log "LOADED"
                 gmapsLoaded = true
                 cb()
             $.ajax
@@ -19,7 +17,6 @@ define ["config","async"], (Config, async) ->
 
         @getRoute: (from, to,cb) ->
            
-            console.log "direction"
             directionsService = new google.maps.DirectionsService();
             opts = 
                 origin: "#{from[0]},#{from[1]}"

@@ -8,10 +8,12 @@ body {
     overflow: hidden;
     font-family: "Helvetica";
     height:100%;
+
 }
 
 #cardholder {
     display:none;
+    top:0;
 }
 
 div.pane {
@@ -22,6 +24,7 @@ div.pane {
 h1 {
     margin:0;
     font-weight: normal;
+    position: relative;
     span {
         font-weight: bold;
     }
@@ -30,6 +33,14 @@ h1 {
     background: rgba(0,0,0,0.6);
     padding:3%;
     border-bottom: solid 1px #333;
+
+    div {
+        float:right;
+        font-size: 0.45em;
+        text-transform: uppercase;
+        width: 35%;
+        text-align: right;
+    }
 }
 
 #spinner {
@@ -178,6 +189,13 @@ div.pane {
             .badgeColor(#6CBE45);
             div.route span {
                 color:#6CBE45;
+            }
+        }
+
+        &.rL {
+            .badgeColor(#A7A9AC);
+            div.route span {
+                color:#A7A9AC;
             }
         }
 
